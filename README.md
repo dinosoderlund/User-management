@@ -1,31 +1,51 @@
-Användarhanterings databas
-En säker och optimerad databas för användarhantering med stöd för:
-Registrering & verifiering,
-Inloggning & kontolåsning,
-Lösenordsåterställning,
-Rollhantering,
-Loggning av inloggningsförsök
+# User Management Database
 
-Projektet använder SQL Server, Python och Azure Blob Storage för att visa en hel mini-pipeline.
+A secure and optimized database for user management with support for:
 
-Funktioner
-SQL: 
-Tabeller för användare, roller, loginförsök och lösenordsåterställning etc
-Lösenord hashas med SHA2_256 + unikt salt för ökad säkerhet
-Procedurer för registrering, inloggning (med kontolåsning vid 3 misslyckade försök), verifiering och lösenordsåterställning
-Vyer för att analysera senaste inloggningar per användare och loginförsök per IP
+- Registration & verification
+- Login & account lockout
+- Password reset
+- Role management
+- Login attempt logging
 
-Python:
-login_attempts.py → genererar 800 fejkade inloggningsförsök
-export_to_csv.py → exporterar data från SQL till CSV
-upload_to_blob.py → laddar upp CSV till Azure Blob Storage
-Azure: Säker lagring i molnet, secrets hanteras med .env.
+The project uses SQL Server, Python, and Azure Blob Storage to demonstrate a complete mini-pipeline.
 
-Att köra
-Klona repot
-Skapa .env med din Azure connection string
+---
 
-Kör skripten i turordning:
-login_attempts.py
-export_to_csv.py
-upload_to_blob.py
+## Features
+
+### SQL
+- Tables for users, roles, login attempts, and password resets
+- Passwords are hashed using SHA2_256 + a unique salt for increased security
+- Stored procedures for registration, login (with account lockout after 3 failed attempts), verification, and password reset
+- Views for analyzing the most recent logins per user and login attempts per IP
+
+### Python
+- `login_attempts.py` → generates 800 fake login attempts
+- `export_to_csv.py` → exports data from SQL to CSV
+- `upload_to_blob.py` → uploads CSV to Azure Blob Storage
+
+### Azure
+- Secure cloud storage, secrets managed with `.env`
+
+---
+
+## Getting Started
+
+1. Clone the repo
+2. Create a `.env` file with your Azure connection string
+3. Run the scripts in order:
+   - `login_attempts.py`
+   - `export_to_csv.py`
+   - `upload_to_blob.py`
+
+---
+
+## Planned Features
+
+- Upgrade password hashing to bcrypt or Argon2
+- Add a REST API layer using FastAPI
+- Containerize the project with Docker
+- Deploy to Azure (Azure SQL + Azure Functions)
+- Add a monitoring dashboard for login attempts and suspicious activity
+- CI/CD pipeline with GitHub Actions
