@@ -1,16 +1,7 @@
 # User Management Database
 
-A secure and optimized database for user management with support for:
-
-- Registration & verification
-- Login & account lockout
-- Password reset
-- Role management
-- Login attempt logging
-
-The project uses SQL Server, Python, and Azure Blob Storage to demonstrate a complete mini-pipeline.
-
----
+A secure and optimized database for user management built in SQL Server,
+with a cloud pipeline using Azure Blob Storage and Azure Data Factory.
 
 ## Features
 
@@ -26,26 +17,39 @@ The project uses SQL Server, Python, and Azure Blob Storage to demonstrate a com
 - `upload_to_blob.py` → uploads CSV to Azure Blob Storage
 
 ### Azure
-- Secure cloud storage, secrets managed with `.env`
-
----
+- Blob Storage for secure cloud storage, secrets managed with `.env`
+- Azure Data Factory pipeline that automatically processes uploaded files
+- Storage event trigger that activates the pipeline when a new file is uploaded
 
 ## Getting Started
 
 1. Clone the repo
-2. Create a `.env` file with your Azure connection string
-3. Run the scripts in order:
-   - `login_attempts.py`
-   - `export_to_csv.py`
-   - `upload_to_blob.py`
+2. Create a `.env` file with your Azure connection string:
+```
+AZURE_STORAGE_CONNECTION_STRING=your-connection-string-here
+```
+3. Install dependencies:
+```
+pip install faker pypyodbc python-dotenv azure-storage-blob
+```
+4. Run the scripts in order:
+```
+python login_attempts.py
+python export_to_csv.py
+python upload_to_blob.py
+```
 
----
+## Azure Pipeline
+
+The ADF pipeline triggers automatically when a file is uploaded to Blob Storage:
+```
+upload_to_blob.py → user-data/login_attempts.csv → ADF trigger → user-data/processed/login_attempts_processed.csv
+```
 
 ## Planned Features
-
 - Upgrade password hashing to bcrypt or Argon2
-- Add a REST API layer using FastAPI
-- Containerize the project with Docker
+- REST API layer using FastAPI
+- Containerize with Docker
 - Deploy to Azure (Azure SQL + Azure Functions)
-- Add a monitoring dashboard for login attempts and suspicious activity
+- Monitoring dashboard for login attempts and suspicious activity
 - CI/CD pipeline with GitHub Actions
